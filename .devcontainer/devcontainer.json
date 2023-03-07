@@ -1,0 +1,53 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "AngularSignals",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:0-18-bullseye",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/angular-cli:2": {
+			"version": "next"
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+	"postCreateCommand": "sh .devcontainer/postCreate.sh",
+	"mounts": [
+		"source=angular-signals-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume", // deps volume
+		"source=angular-signals-bashhistory,target=/commandhistory,type=volume", // bash history
+		"source=angular-signals-extensions,target=/root/.vscode-server/extensions,type=volume", // extensions volume
+		// And/or for VS Code Insiders
+		"source=angular-signals-extensions-insiders,target=/root/.vscode-server-insiders/extensions,type=volume" // indiders volume
+	],
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "node",
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"johnpapa.angular2",
+				"waderyan.gitblame",
+				"dbaeumer.vscode-eslint"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.fixAll": true,
+					"source.fixAll.eslint": true,
+					"source.organizeImports": true,
+					"addMissingImports": true
+				}
+			}
+		}
+	}
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
